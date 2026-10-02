@@ -58,3 +58,13 @@ test('text always has strong contrast against surfaces', () => {
 });
 
 test('schedule math', () => schedule());
+
+test('already-dark detection', async () => {
+  const { looksDark } = await import('../../src/content/verdict.ts');
+  const m = (darkRatio: number, lightRatio: number, lightText = 0.5) => ({ darkRatio, lightRatio, lightText, samples: 36 });
+  assert.equal(looksDark(m(1, 0)), true, 'fully dark page');
+  assert.equal(looksDark(m(0.85, 0.1)), true, 'dark page with a small light card');
+  assert.equal(looksDark(m(0.5, 0.5, 0.6)), false, 'half dark hero, half white login panel');
+  assert.equal(looksDark(m(0.6, 0.35)), false, 'dark header and hero over light content');
+  assert.equal(looksDark(m(0, 1)), false, 'light page');
+});

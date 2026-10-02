@@ -41,7 +41,8 @@ export function transformOklch(role: Role, l: number, c: number, h: number, alph
   const w = vividness(c);
   switch (role) {
     case 'bg': {
-      const ln = Math.min(surfaceL(l), 0.16 + 0.484 * l);
+      // Already-dark surfaces keep (almost) their own darkness; light ones go dark.
+      const ln = Math.min(surfaceL(l), Math.max(0.15, 0.8 * l));
       const lv = clamp(0.36, l, 0.58);
       const l1 = ln * (1 - w) + lv * w;
       // Faint neutral overlays (hover tints, scrims) flip direction instead.
@@ -71,7 +72,7 @@ const SURFACE = '(.205 + .22*(1 - exp((l - 1)/.22)))';
 
 const RELATIVE: Record<Role, { l: string; c: string }> = {
   bg: {
-    l: `calc((min(${SURFACE},.16 + .484*l)*(1 - ${W}) + clamp(.36,l,.58)*${W})*(1 - clamp(0,(.45 - alpha)/.1,1)*(1 - ${W})) + (1 - l)*clamp(0,(.45 - alpha)/.1,1)*(1 - ${W}))`,
+    l: `calc((min(${SURFACE},max(.15,.8*l))*(1 - ${W}) + clamp(.36,l,.58)*${W})*(1 - clamp(0,(.45 - alpha)/.1,1)*(1 - ${W})) + (1 - l)*clamp(0,(.45 - alpha)/.1,1)*(1 - ${W}))`,
     c: `calc(min(c*.7,.08)*(1 - ${W}) + c*${W})`,
   },
   fg: {

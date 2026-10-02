@@ -1,15 +1,10 @@
 import { luminance, parseColor, type RGBA } from './color';
+import type { Measurement } from './verdict';
 
 const MEDIA = new Set(['IMG', 'VIDEO', 'CANVAS', 'IFRAME', 'PICTURE', 'EMBED', 'OBJECT', 'svg']);
 const DARK_L = 0.45; // OKLab lightness below which a surface counts as dark
+const LIGHT_L = 0.75; // …and above which it counts as light (glaring at night)
 
-export interface Measurement {
-  /** Share of sampled points sitting on a dark surface (0..1), or null if too few samples. */
-  darkRatio: number | null;
-  /** Share of sampled text that is light (0..1), or null if no text was sampled. */
-  lightText: number | null;
-  samples: number;
-}
 
 function shadowOf(el: Element): ShadowRoot | null {
   try {
@@ -72,6 +67,7 @@ export function measure(): Measurement {
   const w = window.innerWidth;
   const h = window.innerHeight;
   let dark = 0;
+  let light = 0;
   let known = 0;
   let lightText = 0;
   let texts = 0;
@@ -87,7 +83,9 @@ export function measure(): Measurement {
         const surface = surfaceAt(stack);
         if (surface && surface !== 'skip') {
           known++;
-          if (luminance(surface) < DARK_L) dark++;
+          const l = luminance(surface);
+          if (l < DARK_L) dark++;
+          else if (l > LIGHT_L) light++;
         }
         const top = stack[0];
         if (top && !MEDIA.has(top.tagName) && top.textContent?.trim()) {
@@ -106,7 +104,9 @@ export function measure(): Measurement {
     const c = canvasColor();
     if (c) {
       known++;
-      if (luminance(c) < DARK_L) dark++;
+      const l = luminance(c);
+      if (l < DARK_L) dark++;
+      else if (l > LIGHT_L) light++;
     }
     const body = document.body;
     if (body) {
@@ -120,22 +120,8 @@ export function measure(): Measurement {
 
   return {
     darkRatio: known ? dark / known : null,
+    lightRatio: known ? light / known : null,
     lightText: texts ? lightText / texts : null,
     samples: known,
   };
-}
-
-/**
- * Decide whether a measurement looks like a dark page. `previous` provides hysteresis
- * so pages hovering around the threshold don't flip back and forth.
- */
-export function looksDark(m: Measurement, previous?: boolean): boolean {
-  if (m.darkRatio !== null && m.samples >= 4) {
-    if (m.darkRatio >= 0.55) return true;
-    if (m.darkRatio <= 0.4) return false;
-    if (previous !== undefined) return previous;
-    return (m.lightText ?? 0) >= 0.5;
-  }
-  if (m.darkRatio !== null) return m.darkRatio >= 0.5 || (m.lightText ?? 0) >= 0.6;
-  return (m.lightText ?? 0) >= 0.6;
 }

@@ -11,7 +11,8 @@ import {
   type Verdict,
 } from '../shared/settings';
 import type { Message, PageState, StatusReply } from '../shared/messages';
-import { looksDark, measure } from './detect';
+import { measure } from './detect';
+import { looksDark } from './verdict';
 import { Scope } from './scope';
 import { RemoteSheets, readRules } from './sheets';
 import { VarRegistry } from './transform';
