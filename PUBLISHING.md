@@ -39,7 +39,7 @@ npm run build        # dist/ 폴더 생성
 1. [PRIVACY.md](PRIVACY.md)의 `YOUR-CONTACT-EMAIL`을 실제 문의 이메일로 바꿉니다.
 2. 누구나 볼 수 있는 URL에 올립니다. 다음 중 편한 방법을 쓰면 됩니다.
    - 회사 웹사이트의 한 페이지 (예: `https://<회사도메인>/dusk/privacy`)
-   - GitHub 공개 저장소의 PRIVACY.md 링크, 또는 GitHub Pages
+   - GitHub Pages: 이 저장소는 `https://evanbaee.github.io/dusk/PRIVACY.html`에 올라가 있어요. GitHub의 `blob/...` 링크는 Google 크롤러에 503을 돌려줘서 웹 스토어가 "연결할 수 없음"으로 거부합니다.
    - Notion 페이지를 '웹에 게시'
 3. 이 URL은 5단계에서 입력합니다.
 
