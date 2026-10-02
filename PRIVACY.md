@@ -29,7 +29,7 @@ If this policy changes, the new version will be published at this address with a
 
 ## Contact
 
-Questions: YOUR-CONTACT-EMAIL
+Questions: baejaehwan1125@gmail.com
 
 ---
 
