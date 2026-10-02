@@ -68,10 +68,10 @@ New pages are painted dark from the very first frame at night, and switching on 
 Dusk collects and sends nothing. No analytics, ads or tracking — everything happens inside your browser.
 ```
 
-### 그래픽 에셋 (`assets/store/`)
+### 그래픽 에셋 (모두 `assets/store/`에 있어요)
 | 항목 | 파일 |
 |---|---|
-| 스토어 아이콘 128×128 | `assets/icons/icon128.png` (패키지에도 포함됨) |
+| 스토어 아이콘 128×128 | `store-icon-128.png` — 등록정보에서 직접 업로드해야 해요 |
 | 스크린샷 1280×800 (최대 5장) | `ko-1-convert.png`, `ko-2-native.png`, `ko-3-dark.png`, `ko-4-popup.png` (영어: `en-*.png`) |
 | 작은 프로모션 타일 440×280 | `promo-440x280.png` — 모든 언어 공통이라 글자 없이 이름만 넣었어요 |
 

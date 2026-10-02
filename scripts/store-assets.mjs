@@ -2,7 +2,7 @@
 // from the demo pages in test/e2e/fixtures, with the real extension doing the conversion.
 import { chromium } from 'playwright';
 import http from 'node:http';
-import { mkdtemp, mkdir, readFile } from 'node:fs/promises';
+import { copyFile, mkdtemp, mkdir, readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 
@@ -172,6 +172,9 @@ await render(
   440,
   280,
 );
+
+// The store listing needs the 128px icon uploaded separately; keep it next to the other store images.
+await copyFile('assets/icons/icon128.png', path.join(outDir, 'store-icon-128.png'));
 
 await context.close();
 servers.forEach((s) => s.close());
