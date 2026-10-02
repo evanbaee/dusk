@@ -1,5 +1,6 @@
 import {
   SETTINGS_KEY,
+  VERDICTS_KEY,
   isActive,
   loadSettings,
   nextChange,
@@ -42,6 +43,10 @@ let boundaryTimer: ReturnType<typeof setTimeout> | undefined;
 let recheckTimer: ReturnType<typeof setTimeout> | undefined;
 let reportedVerdict: Verdict | null = null;
 let lastError: string | null = null;
+/** What this site turned out to be on earlier visits; avoids re-learning it with a flash. */
+let prior: Verdict | undefined;
+/** When a converted page first looked dark on its own; switching needs a second look. */
+let darkSince = 0;
 let supportInfo = '';
 
 function noteError(e: unknown): void {
@@ -67,6 +72,19 @@ function currentMode(): SiteMode {
 // Main world bridge
 
 const toMain = (name: 'dusk:force' | 'dusk:release') => window.dispatchEvent(new CustomEvent(name));
+
+/**
+ * The main-world script reports CSSOM changes (CSS-in-JS) the moment they happen. It's only
+ * registered for page loads while Dusk is active, so tabs opened earlier get it injected now.
+ */
+function ensureMainWorld(): void {
+  let present = false;
+  const pong = () => (present = true);
+  window.addEventListener('dusk:pong', pong, { once: true });
+  window.dispatchEvent(new CustomEvent('dusk:ping'));
+  window.removeEventListener('dusk:pong', pong);
+  if (!present) chrome.runtime.sendMessage({ type: 'inject-main' } satisfies Message).catch(() => {});
+}
 
 function markReady(): void {
   if (!html.hasAttribute(READY)) html.setAttribute(READY, '');
@@ -172,8 +190,10 @@ async function decide(kind: 'auto' | 'convert', gen: number): Promise<void> {
     scope.setMode('none');
   }
 
-  // 2. Already dark? Leave it exactly as it is.
-  if (measureDark()) {
+  // 2. Already dark? Leave it exactly as it is. A site that needed converting on earlier
+  //    visits is converted right away: wrongly leaving a light page alone means a white flash,
+  //    while converting an already-dark page barely changes it.
+  if (prior !== 'light' && measureDark()) {
     setState('dark');
     return;
   }
@@ -187,9 +207,20 @@ function recheck(): void {
   if (engaged !== 'auto' || !scope || !alive()) return;
   if (state === 'converted') {
     if (measureOriginal()) {
+      // Only drop the conversion if the page stays dark on a second look (not a splash/overlay).
+      if (!darkSince) {
+        darkSince = Date.now();
+        scheduleRecheck(900);
+        return;
+      }
+      if (Date.now() - darkSince < 800) return scheduleRecheck(900 - (Date.now() - darkSince));
+      darkSince = 0;
       scope.setMode('none');
       setState('dark');
-    } else if (!nativeTried && nativeSupport().any) {
+      return;
+    }
+    darkSince = 0;
+    if (!nativeTried && nativeSupport().any) {
       nativeTried = true;
       scope.setMode('native', { forceScheme: nativeSupport().scheme });
       if (measureDark()) setState('native');
@@ -216,7 +247,10 @@ function recheck(): void {
 
 function scheduleRecheck(delay = 400): void {
   clearTimeout(recheckTimer);
-  recheckTimer = setTimeout(recheck, delay);
+  recheckTimer = setTimeout(() => {
+    recheckTimer = undefined;
+    recheck();
+  }, delay);
 }
 
 // ---------------------------------------------------------------------------
@@ -235,6 +269,34 @@ function domReady(): Promise<void> {
     // Don't keep the fallback up forever on pages that take ages to finish parsing.
     const poll = () => (document.body ? finish() : setTimeout(poll, 100));
     setTimeout(poll, 2500);
+  });
+}
+
+/**
+ * SPAs often paint a near-empty splash (logo on a dark background) before the real app.
+ * Deciding on that would call a light app "already dark", so wait — with the preflight still
+ * keeping the page dark — until there's real content or a short timeout passes.
+ */
+function contentReady(timeout = 1500): Promise<void> {
+  const enough = () => (document.body?.innerText.trim().length ?? 0) >= 80;
+  if (!isTop || enough()) return Promise.resolve();
+  return new Promise((resolve) => {
+    let queued = false;
+    const done = () => {
+      observer.disconnect();
+      clearTimeout(timer);
+      resolve();
+    };
+    const observer = new MutationObserver(() => {
+      if (queued) return;
+      queued = true;
+      setTimeout(() => {
+        queued = false;
+        if (enough()) done();
+      }, 50);
+    });
+    observer.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+    const timer = setTimeout(done, timeout);
   });
 }
 
@@ -274,10 +336,13 @@ async function engage(kind: 'auto' | 'convert', live: boolean): Promise<void> {
   state = 'pending';
   lastDark = undefined;
   nativeTried = false;
+  darkSince = 0;
   const loading = setInterval(prefetchRemote, 100);
   await domReady();
+  if (kind === 'auto' && !live) await contentReady();
   clearInterval(loading);
   if (gen !== generation) return;
+  ensureMainWorld();
   try {
     await withTransition(live, async () => {
       // Reset any previous mode first so the decision sees the page as the site ships it.
@@ -346,6 +411,21 @@ function watchPage(): void {
   if (document.body) watchBody();
   else document.addEventListener('DOMContentLoaded', watchBody, { once: true });
 
+  // A page left alone as "already dark" may render light content later; look again soon.
+  let lastLook = 0;
+  const domObserver = new MutationObserver(() => {
+    if (!alive()) return domObserver.disconnect();
+    if (state !== 'dark' || engaged !== 'auto') return;
+    const wait = Math.max(120, 400 - (Date.now() - lastLook));
+    if (recheckTimer) return;
+    recheckTimer = setTimeout(() => {
+      recheckTimer = undefined;
+      lastLook = Date.now();
+      recheck();
+    }, wait);
+  });
+  domObserver.observe(html, { childList: true, subtree: true });
+
   // CSSOM changes (insertRule, replaceSync, adoptedStyleSheets) reported by the main-world script.
   window.addEventListener('dusk:cssom', () => scope?.requestSync());
   let shadowTimer: ReturnType<typeof setTimeout> | undefined;
@@ -403,6 +483,10 @@ async function main(): Promise<void> {
   html.setAttribute(INSTANCE, instanceId);
 
   settings = await loadSettings();
+  if (isTop && ownHost) {
+    const got = await chrome.storage.local.get(VERDICTS_KEY);
+    prior = (got[VERDICTS_KEY] as Record<string, { v: Verdict }> | undefined)?.[ownHost]?.v;
+  }
   if (!alive()) return;
 
   chrome.storage.onChanged.addListener((changes, area) => {

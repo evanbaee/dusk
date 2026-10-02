@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SPA with a dark splash</title>
+<style>
+  body { margin: 0; font: 15px/1.6 system-ui, sans-serif; }
+  .splash { position: fixed; inset: 0; background: #0c0a09; display: grid; place-items: center; color: #f97316; font-weight: 800; font-size: 28px; }
+  .app { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+  .side { background: #1c1917; color: #e7e5e4; padding: 24px; }
+  .main { background: #fafaf9; color: #1c1917; padding: 32px; }
+  .card { background: #fff; border: 1px solid #e7e5e4; border-radius: 14px; padding: 20px; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<div class="splash" id="splash">HAILENS</div>
+<script>
+  // Like many SPAs: a dark splash first, the (light) app once data arrives.
+  setTimeout(() => {
+    document.getElementById('splash').remove();
+    document.body.insertAdjacentHTML('beforeend', `<div class="app"><nav class="side"><b>HAILENS</b><p>테스트 과목</p><p>신임교원 마이크로티칭</p></nav>
+      <main class="main"><h1>강의 분석 결과</h1>${'<div class="card"><h3>리포트 요약</h3><p>본 강의는 국제 무역 이론의 통합 모델인 표준 무역 모델의 기초 개념과 구성 요소를 체계적으로 전달하고 있습니다.</p></div>'.repeat(4)}</main></div>`);
+  }, 900);
+</script>
+</body>
+</html>

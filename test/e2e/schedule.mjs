@@ -18,7 +18,8 @@ const server = http.createServer(async (req, res) => {
 }).listen(4701);
 const remote = http.createServer(async (req, res) => {
   try {
-    res.writeHead(200, { 'content-type': 'text/css' }).end(await readFile(path.join(root, new URL(req.url, 'http://x').pathname)));
+    const body = await readFile(path.join(root, new URL(req.url, 'http://x').pathname));
+    res.writeHead(200, { 'content-type': req.url.endsWith('.css') ? 'text/css' : 'text/html' }).end(body);
   } catch {
     res.writeHead(404).end();
   }
@@ -43,7 +44,7 @@ const set = (settings) => sw.evaluate((s) => chrome.storage.local.set({ settings
 const base = { schedule: { enabled: true, start: hhmm(-60), end: hhmm(60) }, power: true, override: null, sites: {} };
 const status = () =>
   sw.evaluate(async () => {
-    const [tab] = await chrome.tabs.query({ url: 'http://localhost:4701/*' });
+    const [tab] = await chrome.tabs.query({ url: ['http://localhost:4701/*', 'http://127.0.0.1:4702/*'] });
     return (await chrome.tabs.sendMessage(tab.id, { type: 'status' })).state;
   });
 const registered = () => sw.evaluate(async () => (await chrome.scripting.getRegisteredContentScripts()).map((s) => s.id).sort().join(','));
@@ -84,9 +85,14 @@ await wait(1500);
 check('always convert overrides dark detection', await status(), 'converted');
 
 await set(base);
-await page.reload();
+await page.goto('http://127.0.0.1:4702/dark.html');
 await wait(1500);
-check('auto mode leaves dark page alone', await status(), 'dark');
+check('auto mode leaves a dark page alone', await status(), 'dark');
+
+// localhost was converted before, so its dark page is converted first and released after a second look.
+await page.goto('http://localhost:4701/dark.html');
+await wait(3500);
+check('dark page on a previously converted site settles to dark', await status(), 'dark');
 
 // Popup rendering (night window active, current tab = fixture).
 await page.goto('http://localhost:4701/light.html');

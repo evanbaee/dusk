@@ -12,7 +12,10 @@
   if (w[KEY]) return;
   w[KEY] = true;
 
-  let forced = true;
+  // Registered scripts run while the page is still loading. If we were injected into a page
+  // that was already open, the content script decides later whether to force dark.
+  let forced = document.readyState === 'loading';
+  window.addEventListener('dusk:ping', () => window.dispatchEvent(new CustomEvent('dusk:pong')));
   const DARK = /\(\s*prefers-color-scheme\s*:\s*dark\s*\)/gi;
   const LIGHT = /\(\s*prefers-color-scheme\s*:\s*light\s*\)/gi;
 

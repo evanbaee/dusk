@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SPA with CSS-in-JS</title>
+<style>body { margin: 0; padding: 32px; font: 15px/1.6 system-ui, sans-serif; background: #fff; color: #111; }</style>
+</head>
+<body>
+<h1>CSS-in-JS route change</h1>
+<div id="view"></div>
+<script>
+  // Simulates a client-side route change: new rules via insertRule (styled-components/emotion style), then new DOM.
+  const sheet = document.head.appendChild(document.createElement('style')).sheet;
+  window.navigateLight = () => {
+    sheet.insertRule('.panel-x { background: #ffffff; color: #111827; border: 1px solid #e5e7eb; height: 420px; border-radius: 12px; padding: 20px; }');
+    document.getElementById('view').innerHTML = '<div class="panel-x">New route content</div>';
+  };
+</script>
+</body>
+</html>

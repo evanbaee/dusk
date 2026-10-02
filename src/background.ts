@@ -261,6 +261,17 @@ chrome.runtime.onMessage.addListener((msg: Message, sender, reply) => {
     p.then(reply);
     return true;
   }
+  if (msg?.type === 'inject-main' && sender.tab?.id !== undefined) {
+    chrome.scripting
+      .executeScript({
+        target: { tabId: sender.tab.id, frameIds: [sender.frameId ?? 0] },
+        files: ['main-world.js'],
+        world: 'MAIN',
+        injectImmediately: true,
+      })
+      .catch(() => {});
+    return false;
+  }
   if (msg?.type === 'verdict' && sender.tab && typeof msg.host === 'string') {
     recordVerdict(msg.host, msg.verdict);
   }

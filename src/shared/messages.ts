@@ -12,7 +12,8 @@ export type Message =
   | { type: 'fetch-css'; url: string }
   | { type: 'analyze-image'; url: string }
   | { type: 'verdict'; host: string; verdict: Verdict }
-  | { type: 'status' };
+  | { type: 'status' }
+  | { type: 'inject-main' };
 
 export interface StatusReply {
   state: PageState;
