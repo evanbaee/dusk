@@ -72,10 +72,10 @@ Dusk collects and sends nothing. No analytics, ads or tracking — everything ha
 | 항목 | 파일 |
 |---|---|
 | 스토어 아이콘 128×128 | `store-icon-128.png` — 등록정보에서 직접 업로드해야 해요 |
-| 스크린샷 1280×800 (최대 5장) | `ko-1-convert.png`, `ko-2-native.png`, `ko-3-dark.png`, `ko-4-popup.png` (영어: `en-*.png`) |
+| 전 언어 공통 스크린샷 1280×800 (필수) | `en-1-convert.png` ~ `en-4-popup.png` |
+| 현지화된 스크린샷 1280×800 | 영어: `en-*.png`, 한국어: `ko-*.png` |
 | 작은 프로모션 타일 440×280 | `promo-440x280.png` — 모든 언어 공통이라 글자 없이 이름만 넣었어요 |
 
-스크린샷도 언어별로 따로 올릴 수 없으면, 주 사용자 언어 세트(`ko-*` 또는 `en-*`) 하나만 올리세요.
 
 ---
 
