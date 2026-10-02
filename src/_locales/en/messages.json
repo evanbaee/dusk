@@ -1,0 +1,117 @@
+{
+  "extName": {
+    "message": "Dusk — Smart Night Dark Mode",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "Turns tabs dark at night: uses a site's own dark theme, keeps dark sites as they are, and converts the rest naturally.",
+    "description": "Store/manifest description"
+  },
+  "actionTitle": {
+    "message": "Dusk"
+  },
+  "darkMode": {
+    "message": "Dark mode"
+  },
+  "chipOn": {
+    "message": "On"
+  },
+  "chipOff": {
+    "message": "Off"
+  },
+  "subAlwaysOn": {
+    "message": "On until you turn it off"
+  },
+  "subManualOffNoSchedule": {
+    "message": "Off until you turn it on"
+  },
+  "subScheduledOn": {
+    "message": "On by schedule · turns off at $TIME$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "subScheduledOff": {
+    "message": "Off by schedule · turns on at $TIME$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "subManualOn": {
+    "message": "Turned on manually · schedule resumes at $TIME$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "subManualOff": {
+    "message": "Turned off manually · schedule resumes at $TIME$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "subAllDay": {
+    "message": "On all day by schedule"
+  },
+  "resumeSchedule": {
+    "message": "Back to schedule"
+  },
+  "schedule": {
+    "message": "Schedule"
+  },
+  "turnOnAt": {
+    "message": "Turn on"
+  },
+  "turnOffAt": {
+    "message": "Turn off"
+  },
+  "thisSite": {
+    "message": "This site"
+  },
+  "localFile": {
+    "message": "Local file"
+  },
+  "modeAuto": {
+    "message": "Auto"
+  },
+  "modeConvert": {
+    "message": "Always convert"
+  },
+  "modeOff": {
+    "message": "Keep original"
+  },
+  "statusUnavailable": {
+    "message": "Chrome doesn't allow extensions on this page"
+  },
+  "statusInactive": {
+    "message": "Dark mode is off right now"
+  },
+  "statusOff": {
+    "message": "Showing this site as it is"
+  },
+  "statusPending": {
+    "message": "Looking at the page…"
+  },
+  "statusNative": {
+    "message": "Using the site's own dark theme"
+  },
+  "statusDark": {
+    "message": "Already dark — left untouched"
+  },
+  "statusConverted": {
+    "message": "Darkened by Dusk"
+  },
+  "statusReload": {
+    "message": "Reload the page to apply"
+  },
+  "statusFileAccess": {
+    "message": "Allow access to file URLs in the extension's details to use it here"
+  }
+}

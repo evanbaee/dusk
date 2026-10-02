@@ -1,0 +1,115 @@
+{
+  "extName": {
+    "message": "Dusk — 밤이 되면 스마트 다크 모드"
+  },
+  "extDescription": {
+    "message": "밤이 되면 모든 탭을 어둡게. 사이트 자체 다크 모드를 우선 쓰고, 이미 어두운 사이트는 그대로, 나머지는 자연스럽게 변환해요."
+  },
+  "actionTitle": {
+    "message": "Dusk"
+  },
+  "darkMode": {
+    "message": "다크 모드"
+  },
+  "chipOn": {
+    "message": "켜짐"
+  },
+  "chipOff": {
+    "message": "꺼짐"
+  },
+  "subAlwaysOn": {
+    "message": "직접 끌 때까지 켜져 있어요"
+  },
+  "subManualOffNoSchedule": {
+    "message": "직접 켤 때까지 꺼져 있어요"
+  },
+  "subScheduledOn": {
+    "message": "스케줄에 따라 켜짐 · $TIME$에 꺼져요",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "subScheduledOff": {
+    "message": "스케줄에 따라 꺼짐 · $TIME$에 켜져요",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "subManualOn": {
+    "message": "직접 켰어요 · $TIME$부터 스케줄대로",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "subManualOff": {
+    "message": "직접 껐어요 · $TIME$부터 스케줄대로",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "subAllDay": {
+    "message": "스케줄에 따라 하루 종일 켜져요"
+  },
+  "resumeSchedule": {
+    "message": "스케줄로 돌아가기"
+  },
+  "schedule": {
+    "message": "자동 스케줄"
+  },
+  "turnOnAt": {
+    "message": "켜는 시간"
+  },
+  "turnOffAt": {
+    "message": "끄는 시간"
+  },
+  "thisSite": {
+    "message": "이 사이트"
+  },
+  "localFile": {
+    "message": "로컬 파일"
+  },
+  "modeAuto": {
+    "message": "자동"
+  },
+  "modeConvert": {
+    "message": "항상 변환"
+  },
+  "modeOff": {
+    "message": "원본 유지"
+  },
+  "statusUnavailable": {
+    "message": "Chrome 정책상 이 페이지에서는 작동할 수 없어요"
+  },
+  "statusInactive": {
+    "message": "지금은 다크 모드가 꺼져 있어요"
+  },
+  "statusOff": {
+    "message": "이 사이트는 원본 그대로 보여요"
+  },
+  "statusPending": {
+    "message": "페이지를 살펴보는 중…"
+  },
+  "statusNative": {
+    "message": "사이트 자체 다크 모드를 켰어요"
+  },
+  "statusDark": {
+    "message": "원래 어두운 사이트라 그대로 뒀어요"
+  },
+  "statusConverted": {
+    "message": "Dusk가 어둡게 바꿨어요"
+  },
+  "statusReload": {
+    "message": "페이지를 새로고침하면 적용돼요"
+  },
+  "statusFileAccess": {
+    "message": "확장 프로그램 세부정보에서 '파일 URL에 대한 액세스 허용'을 켜 주세요"
+  }
+}

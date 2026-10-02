@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light dark">
+<title>Native CSS dark</title>
+<link rel="stylesheet" href="http://127.0.0.1:4702/native-remote.css">
+<style>
+  :root { --bg: #ffffff; --fg: #1f2328; --muted: #59636e; --card: #f6f8fa; --border: #d1d9e0; --accent: #0969da; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0d1117; --fg: #f0f6fc; --muted: #9198a1; --card: #151b23; --border: #3d444d; --accent: #4493f8; }
+  }
+  body { margin: 0; padding: 32px; background: var(--bg); color: var(--fg); font: 15px/1.6 system-ui, sans-serif; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+  a { color: var(--accent); }
+  .muted { color: var(--muted); }
+</style>
+</head>
+<body>
+  <h1>Site with its own dark theme</h1>
+  <div class="card"><p>This site ships <code>@media (prefers-color-scheme: dark)</code> rules. Dusk should switch them on instead of converting colors. <a href="#">A link</a>.</p><p class="muted">Muted secondary text.</p></div>
+  <div class="card remote-native">Rules from a cross-origin stylesheet's dark block.</div>
+  <picture><source srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='160'%20height='40'%3E%3Crect%20width='160'%20height='40'%20rx='6'%20fill='%23f0f6fc'/%3E%3Ctext%20x='12'%20y='26'%20font-family='sans-serif'%20font-size='16'%20fill='%230d1117'%3EDARK%20LOGO%3C/text%3E%3C/svg%3E" media="(prefers-color-scheme: dark)"><img alt="logo" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='160'%20height='40'%3E%3Crect width='160' height='40' rx='6' fill='%231f2328'/%3E%3Ctext x='12' y='26' font-family='sans-serif' font-size='16' fill='%23fff'%3ELIGHT LOGO%3C/text%3E%3C/svg%3E"></picture>
+</body>
+</html>

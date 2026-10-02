@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light dark">
+<title>Nimbus Docs</title>
+<style>
+  :root { --bg: #ffffff; --panel: #f6f8fa; --fg: #1f2328; --muted: #59636e; --line: #d1d9e0; --accent: #0969da; --code: #f6f8fa; --tip-bg: #ddf4ff; --tip-line: #54aeff; --kw: #cf222e; --str: #0a3069; --fn: #8250df; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0d1117; --panel: #151b23; --fg: #f0f6fc; --muted: #9198a1; --line: #3d444d; --accent: #4493f8; --code: #151b23; --tip-bg: #0c2d6b66; --tip-line: #1f6feb; --kw: #ff7b72; --str: #a5d6ff; --fn: #d2a8ff; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.65 -apple-system, system-ui, sans-serif; }
+  header { display: flex; align-items: center; gap: 22px; padding: 14px 28px; border-bottom: 1px solid var(--line); background: var(--panel); }
+  header b { font-size: 17px; } header a { color: var(--muted); text-decoration: none; }
+  header input { margin-left: auto; width: 260px; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
+  .wrap { display: grid; grid-template-columns: 230px 1fr 220px; }
+  nav.side { padding: 22px 20px; border-right: 1px solid var(--line); min-height: 900px; }
+  nav.side div { padding: 5px 10px; border-radius: 6px; color: var(--muted); }
+  nav.side div.on { background: var(--panel); color: var(--fg); font-weight: 600; box-shadow: inset 3px 0 var(--accent); }
+  article { padding: 28px 44px; }
+  h1 { margin: 0 0 6px; font-size: 32px; letter-spacing: -0.02em; }
+  .lead { color: var(--muted); margin: 0 0 20px; font-size: 17px; }
+  pre { background: var(--code); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; font-size: 13.5px; }
+  .k { color: var(--kw); } .s { color: var(--str); } .f { color: var(--fn); }
+  .tip { border-left: 4px solid var(--tip-line); background: var(--tip-bg); padding: 10px 14px; border-radius: 6px; margin: 18px 0; }
+  a { color: var(--accent); }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  td, th { border: 1px solid var(--line); padding: 7px 10px; text-align: left; } th { background: var(--panel); }
+  aside { padding: 28px 20px; font-size: 13.5px; color: var(--muted); } aside b { color: var(--fg); display: block; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+<header><b>☁ Nimbus</b><a href="#">Guides</a><a href="#">API</a><a href="#">Changelog</a><input placeholder="Search docs…"></header>
+<div class="wrap">
+  <nav class="side"><div>Introduction</div><div>Installation</div><div class="on">Configuration</div><div>Deploying</div><div>Environment variables</div><div>Edge functions</div><div>CLI reference</div></nav>
+  <article>
+    <h1>Configuration</h1>
+    <p class="lead">Nimbus reads <code>nimbus.config.ts</code> from your project root. Every option has a sensible default.</p>
+    <pre><span class="k">import</span> { <span class="f">defineConfig</span> } <span class="k">from</span> <span class="s">"nimbus"</span>;
+
+<span class="k">export default</span> <span class="f">defineConfig</span>({
+  region: <span class="s">"icn1"</span>,
+  build: { command: <span class="s">"npm run build"</span>, output: <span class="s">"dist"</span> },
+});</pre>
+    <div class="tip"><b>Tip:</b> run <code>nimbus config check</code> to validate your file before deploying. <a href="#">Learn more</a></div>
+    <table><tr><th>Option</th><th>Type</th><th>Default</th></tr><tr><td>region</td><td>string</td><td>"iad1"</td></tr><tr><td>build.command</td><td>string</td><td>"npm run build"</td></tr><tr><td>build.output</td><td>string</td><td>"dist"</td></tr></table>
+  </article>
+  <aside><b>On this page</b>Config file<br>Regions<br>Build settings<br>Validation</aside>
+</div>
+</body>
+</html>

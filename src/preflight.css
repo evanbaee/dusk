@@ -1,0 +1,16 @@
+/*
+ * Registered only while Dusk is active, so pages paint dark from the very first frame
+ * instead of flashing white. The content script sets data-dusk-ready on <html> once it
+ * has decided how to handle the page, which switches these rules off.
+ */
+html:not([data-dusk-ready]):not([data-dusk-measure]) {
+  background-color: #171717 !important;
+  color-scheme: dark !important;
+}
+
+html:not([data-dusk-ready]):not([data-dusk-measure]) body,
+html:not([data-dusk-ready]):not([data-dusk-measure]) body :not(iframe, img, video, canvas, svg, svg *, picture, embed, object) {
+  background-color: #171717 !important;
+  border-color: #333 !important;
+  color: #d4d4d4 !important;
+}

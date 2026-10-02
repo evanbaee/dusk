@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Acme Docs</title>
+<link rel="stylesheet" href="http://127.0.0.1:4702/remote.css">
+<style>
+  :root { --brand: #7c3aed; --surface: #ffffff; --text: #111827; --muted: #6b7280; --line: #e5e7eb; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.6 -apple-system, system-ui, sans-serif; color: var(--text); background: #fff; }
+  nav { display: flex; align-items: center; gap: 24px; padding: 14px 32px; border-bottom: 1px solid var(--line); background: rgba(255,255,255,.9); }
+  nav .logo { font-weight: 700; font-size: 18px; color: #0f172a; }
+  nav a { color: #4b5563; text-decoration: none; }
+  nav .cta { margin-left: auto; background: #2563eb; color: #fff; padding: 7px 14px; border-radius: 8px; }
+  .hero { padding: 48px 32px 32px; background: linear-gradient(180deg, #f8fafc, #ffffff); }
+  .hero h1 { margin: 0 0 8px; font-size: 34px; color: #0f172a; letter-spacing: -0.02em; }
+  .hero p { margin: 0; color: #475569; max-width: 640px; }
+  main { padding: 8px 32px 32px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .card h3 { margin: 0 0 6px; font-size: 16px; }
+  .card p { margin: 0 0 10px; color: var(--muted); font-size: 14px; }
+  .badge { display: inline-block; font-size: 12px; padding: 2px 8px; border-radius: 999px; font-weight: 600; }
+  .ok { background: #dcfce7; color: #166534; }
+  .warn { background: #fef3c7; color: #92400e; }
+  .alert { grid-column: span 3; background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 12px 16px; border-radius: 10px; }
+  pre { margin: 0; background: #f6f8fa; color: #24292f; padding: 12px; border-radius: 8px; font-size: 13px; border: 1px solid #d0d7de; }
+  pre .k { color: #cf222e; } pre .s { color: #0a3069; } pre .f { color: #8250df; }
+  a { color: #2563eb; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  td, th { padding: 6px 8px; border-bottom: 1px solid #e5e7eb; text-align: left; }
+  th { background: #f9fafb; color: #374151; }
+  .brand-btn { background: var(--brand); color: white; border: 0; padding: 8px 14px; border-radius: 8px; font-weight: 600; }
+  .ghost-btn { background: #fff; color: #374151; border: 1px solid #d1d5db; padding: 8px 14px; border-radius: 8px; }
+  input.styled { border: 1px solid #d1d5db; border-radius: 8px; padding: 7px 10px; background: #fff; color: #111; }
+  footer { background: #111827; color: #9ca3af; padding: 20px 32px; font-size: 13px; }
+  footer a { color: #e5e7eb; }
+  .photo { width: 100%; height: 90px; border-radius: 8px; display: block; object-fit: cover; }
+</style>
+</head>
+<body>
+<nav><span class="logo">Acme</span><a href="#">Docs</a><a href="#">Pricing</a><a href="#">Blog</a><a class="cta" href="#">Get started</a></nav>
+<section class="hero">
+  <h1>Build faster with Acme</h1>
+  <p>Everything you need to ship a modern web app. Read the <a href="#">quick start guide</a> or browse the API reference below.</p>
+</section>
+<main>
+  <div class="card">
+    <h3>Deployments <span class="badge ok">Healthy</span></h3>
+    <p>Last deploy 4 minutes ago from <a href="#">main</a>.</p>
+    <button class="brand-btn">Deploy</button> <button class="ghost-btn">Logs</button>
+  </div>
+  <div class="card">
+    <h3>Usage <span class="badge warn">82%</span></h3>
+    <table>
+      <tr><th>Resource</th><th>Used</th></tr>
+      <tr><td>Bandwidth</td><td>41 GB</td></tr>
+      <tr bgcolor="#f3f4f6"><td>Builds</td><td>318</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <img class="photo" alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 90'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%23ff7e5f'/%3E%3Cstop offset='1' stop-color='%23feb47b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='300' height='90' fill='url(%23a)'/%3E%3Ccircle cx='230' cy='30' r='18' fill='%23fff8e1'/%3E%3Cpath d='M0 90 L80 40 L140 75 L210 30 L300 90Z' fill='%23614385'/%3E%3C/svg%3E">
+    <p style="margin-top:10px">Images are left exactly as they are.</p>
+    <input class="styled" placeholder="Search docs"> <input type="checkbox" checked>
+  </div>
+  <div class="alert"><strong>Heads up:</strong> API v1 will be removed on Dec 1. <a href="#">Migrate now</a>.</div>
+  <div class="card" style="background:#fffbeb;border-color:#fde68a;color:#78350f">
+    <h3>Inline-styled callout</h3>
+    <p style="color:#92400e">This box is styled with a style attribute.</p>
+  </div>
+  <div class="card remote-box"><h3>Cross-origin CSS</h3><p class="remote-text">Styled by a stylesheet from another origin.</p></div>
+  <div class="card"><pre><span class="k">const</span> app = <span class="f">createApp</span>({ name: <span class="s">"acme"</span> });</pre>
+    <svg width="20" height="20" viewBox="0 0 20 20" style="margin-top:8px"><circle cx="10" cy="10" r="8" fill="#111827"/></svg>
+    <user-card></user-card>
+  </div>
+</main>
+<footer>© 2026 Acme Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></footer>
+<script>
+customElements.define('user-card', class extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' }).innerHTML = `<style>:host{display:block;margin-top:8px;background:#ffffff;border:1px solid #e5e7eb;border-radius:8px;padding:8px 10px;color:#111827;font-size:13px} b{color:#7c3aed}</style>Shadow DOM: <b>@jane</b>`;
+  }
+});
+</script>
+</body>
+</html>

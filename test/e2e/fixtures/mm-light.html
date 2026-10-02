@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Asks for color scheme, has no dark theme</title>
+<script>window.matchMedia('(prefers-color-scheme: dark)');</script>
+<style>
+  body { margin: 0; font: 15px/1.6 system-ui, sans-serif; color: #2a3c42; }
+  .header { height: 56px; background: white; border-bottom: 1px solid rgba(0,0,0,.1); padding: 0 14px; display: flex; align-items: center; }
+  .main { max-width: 480px; margin: 40px auto 0; background: white; padding: 14px; text-align: center; }
+</style>
+</head>
+<body><div class="header"><b>Brand</b></div><div class="main"><h1>Prove your humanity</h1><p>Transparent body, white boxes, and a script that queries prefers-color-scheme.</p></div></body>
+</html>

@@ -1,0 +1,2 @@
+.remote-native { background: #ddf4ff; color: #0550ae; }
+@media (prefers-color-scheme: dark) { .remote-native { background: #0c2d6b; color: #9ecbff; } }
